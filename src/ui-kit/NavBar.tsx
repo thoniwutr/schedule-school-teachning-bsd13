@@ -5,7 +5,9 @@ import { useState } from "react";
 import logo from "../images/logo.png";
 import { useNavigate, useLocation, matchPath } from "react-router";
 import Text from "../ui-kit/Text";
-
+import { useAuth } from '../sc-context/AuthContext'
+import LoadingButton from "@mui/lab/LoadingButton";
+import Divider from '@mui/material/Divider'
 
 const Wrapper = styled.div`
   display: block;
@@ -18,8 +20,19 @@ const Container = styled.div`
   position: fixed;
   z-index: 1;
   overflow: hidden;
-  background-color: #506be6;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: linear-gradient(90deg, #102066, #2c46b5);
 `;
+
+const FooterWrapper = styled.div`
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+`;
+
 
 const LogoWrapper = styled.div`
   margin: 24px 24px;
@@ -60,9 +73,9 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "40px",
   },
   inActive: {
-    background: "#506be6",
+    background: "transparent",
     color: "#ffffff",
-    borderLeft: "5px solid #506be6",
+    borderLeft: "5px solid #102066",
     "&:hover, &:active": {
       borderLeft: "5px solid #00d379",
       color: "#00d379",
@@ -99,6 +112,7 @@ export default function NavBar() {
   const classes = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser, logout} = useAuth()
 
   const toggleMenu1 = () => {
     console.log("toggle1");
@@ -107,6 +121,14 @@ export default function NavBar() {
   const toggleMenu2 = () => {
     console.log("toggle2");
   };
+
+  const signOut = () => {
+    logout().then(function() {
+      navigate('/')
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
 
   return (
     <Wrapper>
@@ -123,6 +145,9 @@ export default function NavBar() {
             }}
           />
         </LogoWrapper>
+        <Text size={28} align="center" family="LexendDeca" padding='20px' color="white">
+        Welcome
+      </Text>
         <Menus>
           <List className={classes.root}>
             <ListItem
@@ -138,7 +163,7 @@ export default function NavBar() {
             >
               <MainMenu>
                 <Text weight={500} family="LexendDeca">
-                  Product
+                  Schedule
                 </Text>
               </MainMenu>
             </ListItem>
@@ -154,7 +179,7 @@ export default function NavBar() {
                   : classes.inActive
               }
             >
-              <MainMenu> Transaction </MainMenu>
+              <MainMenu> Teacher </MainMenu>
             </ListItem>
             <MenuDivider />
             <ListItem
@@ -168,21 +193,7 @@ export default function NavBar() {
                   : classes.inActive
               }
             >
-              <MainMenu> Order </MainMenu>
-            </ListItem>
-            <MenuDivider />
-            <ListItem
-       onClick={(e) => {
-        e.stopPropagation();
-        navigate("/history");
-      }}
-              className={
-                isHistoryActive(location.pathname)
-                  ? classes.active
-                  : classes.inActive
-              }
-            >
-              <MainMenu> History </MainMenu>
+              <MainMenu> Registration </MainMenu>
             </ListItem>
             <MenuDivider />
             <ListItem
@@ -200,7 +211,36 @@ export default function NavBar() {
             </ListItem>
           </List>
         </Menus>
+        <FooterWrapper>
+        <Text size={13} align="center" family="LexendDeca" color="white">{currentUser?.email}</Text>
+        <Divider sx={{ mt: 1.5, bgcolor: "white",borderRightWidth: 2,width: '200px',   }} />
+        <LoadingButton
+        disabled={false}
+        onClick={signOut}
+        loading={false}
+        sx={{
+          border: 1,
+          borderColor: '#2c46b5n',
+          boxShadow: 1,
+          borderRadius: 2,
+          fontFamily: "LexendDeca",
+          mt: 2,
+          width: '150px',
+          bgcolor: "white",
+          color: "#001da0",
+          textTransform: "none",
+          "&:hover": {
+            backgroundColor: "#001da0",
+            color: "white",
+          },
+        }}
+        variant="contained"
+      >
+        Logout
+      </LoadingButton>
+        </FooterWrapper>
       </Container>
+
     </Wrapper>
   );
 }

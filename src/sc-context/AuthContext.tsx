@@ -2,7 +2,7 @@ import React from 'react'
 
 import { auth } from '../firebase/firebase-config'
 import {
-  loginWithFacebook as FirebaseLogin,
+  loginUser as FirebaseLogin,
   logoutUser as FirebaseLogout,
   FirebaseUser,
 } from '../firebase/services/auth'

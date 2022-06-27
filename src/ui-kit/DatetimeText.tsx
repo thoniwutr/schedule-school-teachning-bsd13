@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 export default function DatetimeText(props: Props) {
   return (
     <Wrapper>
-      <Text color="#6c6c6c" size={0.8} weight={600} family="Assistant" align='center'>
+      <Text  size={0.8} weight={600} family="Assistant" align='center'>
         {format(new Date(props.datetime), props.outputFormat)}
       </Text>
     </Wrapper>

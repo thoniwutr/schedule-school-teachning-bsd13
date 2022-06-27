@@ -37,6 +37,8 @@
     "typescript": "^4.4.2",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.0",
+    "yup": "^0.32.11",
+    "react-hot-toast": "2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

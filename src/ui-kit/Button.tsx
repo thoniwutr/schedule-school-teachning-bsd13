@@ -1,135 +1,135 @@
-import React, { ButtonHTMLAttributes } from 'react'
-import styled from 'styled-components/macro'
+import React from 'react'
+import styled, { css } from 'styled-components'
 
+import { Colors } from '../sc-design/colors'
 import Loading from './Loading'
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger'
 type Props = {
-  variant: ButtonVariant
-  btnLoading?: boolean
-} & ButtonHTMLAttributes<HTMLButtonElement>
+  variant?: 'default' | 'danger' | 'outlined'
+  fontSize?: number
+  loading?: boolean
+  radius?: number
+  width?: string
+  padding?: string
+  icon?: React.ReactNode
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const BaseButton = styled.button`
-  height: 40px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 4px;
-  border-width: 0;
-  border-radius: 4px;
-  color: white;
-  font-family: Assistant;
-  padding: 10px 0;
-  cursor: pointer;
-
-  &:disabled {
-    background-color: #cbcbcb;
-  }
-`
-
-const PrimaryButton = styled(BaseButton)`
-  background-color: #2c46b5;
-
-  &:hover:not(:disabled) {
-    background-color: #00187e;
-  }
-`
-
-const SecondaryButton = styled(BaseButton)`
-  background-color: white;
-  border: 1px solid #2c46b5;
-  color: #2c46b5;
-
-  &:hover:not(:disabled) {
-    background-color: rgba(180, 194, 255, 0.5);
-  }
-`
-
-const DangerButton = styled(BaseButton)`
-  background-color: #f65129;
-
-  &:hover:not(:disabled) {
-    background-color: #e23004;
-  }
-`
-
-const generateButtonWrapper = (variant: ButtonVariant) => {
-  switch (variant) {
-    case 'primary':
-      return PrimaryButton
-    case 'danger':
-      return DangerButton
-    case 'secondary':
-      return SecondaryButton
-  }
+const buttonVariants = {
+  default: {
+    backgroundColor: Colors['$c-blue5'],
+    color: null,
+    borderColor: Colors['$c-blue5'],
+    hover: {
+      backgroundColor: '#08154D',
+    },
+    disabled: {
+      backgroundColor: Colors.gray,
+      color: Colors.white,
+      borderColor: Colors.gray,
+    },
+  },
+  danger: {
+    backgroundColor: Colors.red,
+    color: null,
+    borderColor: Colors.red,
+    hover: {
+      backgroundColor: '#e23004',
+    },
+    disabled: {
+      backgroundColor: Colors.gray,
+      color: Colors.white,
+      borderColor: Colors.gray,
+    },
+  },
+  outlined: {
+    backgroundColor: Colors.white,
+    color: Colors['$c-blue3'],
+    borderColor: Colors['$c-blue3'],
+    hover: {
+      backgroundColor: 'rgba(180, 194, 255, 0.5)',
+    },
+    disabled: {
+      backgroundColor: Colors.white,
+      color: Colors.gray,
+      borderColor: Colors.gray,
+    },
+  },
 }
 
-export default function Button(props: Props) {
-  const { variant = 'primary', children, btnLoading } = props
+const Wrapper = styled.button<Props>`
+  height: 40px;
+  font-family: Assistant;
+  font-weight: 600;
+  font-size: ${(props) => props.fontSize ?? '1'}rem;
+  color: ${Colors.white};
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding-left: 18px;
+  padding-right: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: ${(props) => props.width};
+  padding: ${(props) => props.padding};
+  transition: all 0.1s ease-in;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
-  const Wrapper = generateButtonWrapper(variant)
+  &:active {
+    transform: scale(0.96);
+  }
 
+  ${({ variant, disabled }) => {
+    const btnVariable = variant && buttonVariants[variant]
+
+    if (btnVariable) {
+      return css`
+        color: ${disabled ? btnVariable.disabled.color : btnVariable.color};
+        background-color: ${disabled
+          ? btnVariable.disabled.backgroundColor
+          : btnVariable.backgroundColor};
+
+        border-color: ${disabled
+          ? btnVariable.disabled.borderColor
+          : btnVariable.borderColor};
+
+        &:hover {
+          background-color: ${!disabled && btnVariable.hover.backgroundColor};
+        }
+      `
+    }
+  }}
+`
+
+const ChildrenWrapper = styled.span`
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
+
+export default function Button({
+  variant = 'default',
+  loading,
+  icon,
+  children,
+  ...rest
+}: Props) {
   return (
-    <Wrapper {...props}>
-      {btnLoading ? <Loading width={10} height={10} /> : children}
+    <Wrapper {...rest} variant={variant} disabled={loading || rest.disabled}>
+      {loading ? (
+        <Loading
+          width={15}
+          height={15}
+          color={buttonVariants[variant].disabled.color}
+        />
+      ) : (
+        <React.Fragment>
+          {icon && <span>{icon}</span>}
+          <ChildrenWrapper>{children}</ChildrenWrapper>
+        </React.Fragment>
+      )}
     </Wrapper>
   )
 }
-
-export const WhiteButton = styled.button<{
-  width: string
-  margin: string
-  display: string
-}>`
-  width: ${(props) => props.width}px;
-  margin: ${(props) => props.margin};
-  display: ${(props) => props.display};
-  height: 42px;
-  font-family: 'Assistant';
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  border: 2px solid #2c46b5;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #fff;
-  color: #2c46b5;
-  &:hover {
-    background-color: rgba(180, 194, 255, 0.5);
-    border: 2px solid #2c46b5;
-    color: #2c46b5;
-  }
-`
-
-export const BlueButton = styled.button<{ width: string; margin: string }>`
-  width: ${(props) => props.width}px;
-  margin: ${(props) => props.margin};
-  height: 40px;
-  font-family: 'Assistant';
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.31;
-  letter-spacing: normal;
-  text-align: center;
-  border: 2px solid #2c46b5;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #2c46b5;
-  color: #ffffff;
-  &:hover {
-    background-color: rgb(0, 29, 160);
-    border: 2px solid rgb(0, 29, 160);
-    color: #ffffff;
-  }
-  &:disabled {
-    border: 1px solid #acacac;
-    background-color: #e4e4e4;
-    color: #a1a1a1;
-  }
-`

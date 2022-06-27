@@ -7,31 +7,28 @@ import {
 
 import NavBar from "../ui-kit/NavBar";
 import MenuLayout from '../ui-kit/MenuLayout'
-import FacebookLoginPage from '../auth/FacebookLoginPage'
-import ProductPage from "../sg-pages/product/ProductPage";
-import OrderPage from "../sg-pages/order/OrderPage";
-import HistoryPage from "../sg-pages/history/HistoryPage";
-import TransactionPage from "../sg-pages/transaction/TransactionPage";
 
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../theme";
-import { GlobalStyle } from "../global";
 import CssBaseline from '@mui/material/CssBaseline';
+import AuthLayout from "../sc-authen/AuthenLayout";
+import LoginPage from "../sc-login/LoginPage"
+import SchedulePage from "../sc-schedule/SchedulePage"
+import TeacherPage from "../sc-teacher/TeacherPage"
 
 export default function Routes() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <GlobalStyle />
       <BrowserRouter>
         <RoutesWrapper>
-        <Route path="/" element={<FacebookLoginPage/>} />
+        
+        <Route element={<AuthLayout />}>
+          <Route path="/" element={<LoginPage />} />
+        </Route>
         <Route element={<MenuLayout />}>
           <Route path="/" element={<div></div>} />
-          <Route path="/product" element={<ProductPage/>} />
-          <Route path="/order" element={<OrderPage />} />
-          <Route path="/transaction" element={<TransactionPage/>} />
-          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/schedule" element={<SchedulePage/>} />
         </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </RoutesWrapper>
