@@ -15,6 +15,7 @@ import AuthLayout from "../sc-authen/AuthenLayout";
 import LoginPage from "../sc-login/LoginPage"
 import SchedulePage from "../sc-schedule/SchedulePage"
 import TeacherPage from "../sc-teacher/TeacherPage"
+import ConfirmationPage from "../confirmation";
 
 export default function Routes() {
   return (
@@ -26,9 +27,11 @@ export default function Routes() {
         <Route element={<AuthLayout />}>
           <Route path="/" element={<LoginPage />} />
         </Route>
+
         <Route element={<MenuLayout />}>
           <Route path="/" element={<div></div>} />
           <Route path="/schedule" element={<SchedulePage/>} />
+          <Route path="/confirmation" element={<ConfirmationPage/>} />
         </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </RoutesWrapper>

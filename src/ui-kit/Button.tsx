@@ -133,3 +133,32 @@ export default function Button({
     </Wrapper>
   )
 }
+
+export const BlueButton = styled.button<{ width?: number; margin?: string }>`
+  width: ${(props) => props.width}px;
+  margin: ${(props) => props.margin};
+  height: 40px;
+  font-family: 'Assistant';
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: center;
+  border: 2px solid #2c46b5;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #2c46b5;
+  color: #ffffff;
+  &:hover {
+    background-color: rgb(0, 29, 160);
+    border: 2px solid rgb(0, 29, 160);
+    color: #ffffff;
+  }
+  &:disabled {
+    border: 1px solid #acacac;
+    background-color: #e4e4e4;
+    color: #a1a1a1;
+  }
+`

@@ -11,7 +11,7 @@ export type Props = {
 
 const Input = styled.input<Props>`
   ${input()}
-  height: 36px;
+  height: 45px;
   border-width: ${(props) => props.borderless && 0};
   border: ${(props) => props.error && `2px solid ${Colors.red}`};
   width: 100%;
