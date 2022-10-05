@@ -8,7 +8,7 @@ export const input = () => css`
   font-family: Assistant;
   border-radius: 4px;
   border: 1px solid #b5b5b5;
-  transition: all 0.1s ease-in;
+ 
 
   &::placeholder {
     color: #b5b5b5;

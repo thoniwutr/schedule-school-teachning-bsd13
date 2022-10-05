@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 215px;
+  width: 230px;
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -91,6 +91,10 @@ const isProductActive = (path: string) => {
   return path.includes("/product");
 };
 
+const isConfirmationActive = (path: string) => {
+  return path.includes("/confirmation");
+};
+
 
 const isTransactionActive = (path: string) => {
   return path.includes("/transaction");
@@ -150,6 +154,24 @@ export default function NavBar() {
       </Text>
         <Menus>
           <List className={classes.root}>
+            <ListItem
+           onClick={(e) => {
+            e.stopPropagation();
+            navigate("/confirmation");
+          }}
+              className={
+                isConfirmationActive(location.pathname)
+                  ? classes.active
+                  : classes.inActive
+              }
+            >
+              <MainMenu>
+                <Text weight={500} family="LexendDeca">
+                  ใบตอบรับ
+                </Text>
+              </MainMenu>
+            </ListItem>
+            <MenuDivider />
             <ListItem
            onClick={(e) => {
             e.stopPropagation();

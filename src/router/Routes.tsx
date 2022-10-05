@@ -16,6 +16,7 @@ import LoginPage from "../sc-login/LoginPage"
 import SchedulePage from "../sc-schedule/SchedulePage"
 import TeacherPage from "../sc-teacher/TeacherPage"
 import ConfirmationPage from "../confirmation";
+import ConfirmationDetailPage from "../confirmation/details";
 
 export default function Routes() {
   return (
@@ -32,6 +33,8 @@ export default function Routes() {
           <Route path="/" element={<div></div>} />
           <Route path="/schedule" element={<SchedulePage/>} />
           <Route path="/confirmation" element={<ConfirmationPage/>} />
+          <Route path="/confirmation/:confirmationId" element={<ConfirmationDetailPage/>} />
+
         </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </RoutesWrapper>

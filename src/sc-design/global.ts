@@ -164,7 +164,7 @@ function resetCSS() {
       max-width: 100%;
     }
     /* 7. Remove built-in form typography style */
-    input,
+  
     button,
     textarea,
     select {

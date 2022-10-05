@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import { IConfirmationDocument } from "./types";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { toast } from '../sc-toast/Toast'
 
 export const InputWrapper = styled.div`
   padding: 10px 0px;
@@ -25,7 +26,7 @@ export const InputWrapper = styled.div`
 
 type Props = {
   onClose: () => void;
-  onSuccess?: () => Promise<void>;
+  onSuccess: () => Promise<void>;
 };
 
 export default function AddConfirmationDocModal(props: Props) {
@@ -37,17 +38,20 @@ export default function AddConfirmationDocModal(props: Props) {
     confirmationName: Yup.string().required(),
   });
 
-  const handleOnSubmit = async (payload: { confirmationName; createDate }) => {
+  const handleOnSubmit = async (values: { confirmationName; createDate }) => {
         try{
-            await authenticatedRestClient.post('confirmation', payload)
-        }catch(err){
-            console.log('fsdfds')
+            await authenticatedRestClient.post('confirmation', values)
+            toast.success('Confirmation Document has been created')
+            onSuccess()
+        }catch(err : any){
+          toast.error(err.message)
+        }finally{
+          onClose()
         }
   };
 
   const { values, errors, handleChange, handleSubmit, isSubmitting } =
     useFormik<IConfirmationDocument>({
-      enableReinitialize: true,
       initialValues: {
         confirmationName: "",
         createDate: format(new Date(), "dd MMM yy', 'HH:mm:ss"),
@@ -57,8 +61,6 @@ export default function AddConfirmationDocModal(props: Props) {
       validateOnBlur: false,
       validateOnChange: false,
     });
-
-  const isValidData = values.confirmationName;
 
   return (
     <RemoveScroll>
@@ -102,7 +104,7 @@ export default function AddConfirmationDocModal(props: Props) {
           </InputWrapper>
 
           <LoadingButton
-            disabled={!isValidData || isSubmitting}
+            disabled={isSubmitting}
             onClick={() => handleSubmit()}
             loading={loading}
             sx={{
