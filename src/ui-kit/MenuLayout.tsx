@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Outlet } from 'react-router-dom'
 import NavBar from '../ui-kit/NavBar'
-import AccountHeader from "./AccountHeader";
 
 
 const Wrapper = styled.div`
@@ -22,6 +21,5 @@ export default function MenuLayout() {
         <ContentWrapper>
         <Outlet />
         </ContentWrapper>
-        <AccountHeader/>
     </Wrapper>
 }

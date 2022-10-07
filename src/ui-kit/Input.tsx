@@ -1,31 +1,24 @@
-import styled from 'styled-components/macro'
+import React from 'react'
+import styled from 'styled-components'
+import { Colors } from '../sc-design/colors'
 
-type Props = {
-  inputColor?: string
+import { input } from '../sc-design/mixins'
+
+export type Props = {
   borderless?: boolean
-  error?: string
-  align?: 'left' | 'right' | 'center'
-  padding?: string
-  width?: string
-  family?: 'LexendDeca' | 'Assistant' | 'IBMPlex' | undefined
-}
+  error?: boolean | string | undefined
+} & React.InputHTMLAttributes<HTMLInputElement>
 
 const Input = styled.input<Props>`
-  width: ${(props) => props.width};
-  height: 40px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  border: 1px solid #b5b5b5;
-  font-family: LexendDeca;
-  font-size: 1rem;
-  text-align: ${(props) => props.align};
-  padding: ${(props) => props.padding};
-  color: ${(props) => props.inputColor};
-  border-color: ${(props) => props.error && 'red'};
-  font-family: ${(props) => props.family};
+  ${input()}
+  height: 45px;
+  border-width: ${(props) => props.borderless && 0};
+  border: ${(props) => props.error && `2px solid ${Colors.red}`};
+  width: 100%;
 
-  &:hover {
-    cursor: pointer;
+  &[type='checkbox'] {
+    height: auto;
+    width: auto;
   }
 `
 

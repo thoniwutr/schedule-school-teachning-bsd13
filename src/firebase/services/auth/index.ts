@@ -24,7 +24,7 @@ export function loginWithFacebook() {
   provider.addScope('ads_read');
   provider.addScope('ads_management');
   return signInWithPopup(auth, provider)
-}
+} 
 
 export function logoutUser() {
   return signOut(auth)

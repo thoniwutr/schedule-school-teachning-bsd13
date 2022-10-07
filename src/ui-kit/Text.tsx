@@ -1,66 +1,50 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
+
+import { Color, Colors } from '../sc-design/colors'
 
 type Props = {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "label";
-  size?: number;
+  padding?: string
+  size?: number
   // Better fixed color for this system
-  color?: string;
-  family?: "LexendDeca" | "Assistant" | "IBMPlex" | undefined;
-  weight?: "bold" | "lighter" | number;
-  transform?: "uppercase" | "lowercase" | "capitalize";
-  letterSpacing?: number;
-  align?: "left" | "right" | "center";
-  children: React.ReactNode;
-  display?: "block" | "inline-block" | "inline" | "flex";
-  lineHeight?: number;
-  marginLeft?: number;
-  mWidth?: number;
-  padding?: string;
-};
+  color?: Color
+  family?: 'LexendDeca' | 'Assistant'
+  weight?: 'bold' | 'lighter' | 'normal' | number
+  transform?: 'uppercase' | 'lowercase' | 'capitalize'
+  letterSpacing?: number
+  display?: 'block' | 'inline' | 'inline-block'
+  align?: 'left' | 'right' | 'center'
+  wordBreak?: 'break-all' | 'break-word' | 'initial' | 'keep-all'
+  children: React.ReactNode
+  style?: React.CSSProperties
+  whiteSpace?:
+    | 'normal'
+    | 'pre'
+    | 'nowrap'
+    | 'pre-wrap'
+    | 'pre-line'
+    | 'break-spaces'
 
-const Text = styled.span<Props>`
-  color: ${(props) => props.color};
-  font-size: ${(props) => props.size}rem;
+  onClick?: () => void
+}
+
+const Span = styled.span<Props>`
+  white-space: ${(props) => props.whiteSpace};
+  padding: ${(props) => props.padding};
+  display: ${(props) => props.display};
+  color: ${(props) => props.color && Colors[props.color]};
+  font-size: ${(props) => props.size && `${props.size / 16}rem`};
   font-family: ${(props) => props.family};
   font-weight: ${(props) => props.weight};
   text-transform: ${(props) => props.transform};
-  letter-spacing: ${(props) => props.letterSpacing}px;
+  letter-spacing: ${(props) =>
+    props.letterSpacing && `${props.letterSpacing}px`};
   text-align: ${(props) => props.align};
-  display: ${(props) => props.display};
-  line-height: ${(props) => props.lineHeight};
-  margin-left: ${(props) => props.marginLeft}px;
-  padding: ${(props) => props.padding};
-`;
+  word-break: ${(props) => props.wordBreak};
+`
 
-export default Text;
+export default function Text(props: Props) {
+  const { style, ...otherProps } = props
 
-export function renderGrayText(props) {
-  return (
-    <Text
-      color="#6c6c6c"
-      size={0.8}
-      weight={600}
-      family="Assistant"
-      marginLeft={6}
-    >
-      {props.value}
-    </Text>
-  );
-}
-
-export function renderBlackText(props) {
-  return (
-    <Text color="#000" size={1} weight={600} family="Assistant" marginLeft={6}>
-      {props.value}
-    </Text>
-  );
-}
-
-export function renderDecimalText(props) {
-  return (
-    <Text color="#000" size={1} weight={600} family="Assistant" marginLeft={6}>
-      {props.value.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-    </Text>
-  );
+  return <Span {...otherProps} style={{ ...style }} />
 }
