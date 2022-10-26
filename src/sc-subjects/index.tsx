@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ITeacher } from "./types";
+import { ISubject } from "./types";
 import { authenticatedRestClient } from "../api/RestClient";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { HeaderWrapper, LeadingWrapper, Wrapper } from "../confirmation/index.styles";
@@ -9,17 +9,17 @@ import Text from '../ui-kit/Text'
 import { BlueButton } from "../ui-kit/Button";
 import Loading from "../ui-kit/Loading";
 
-function TeacherPage() {
+function SubjectPage() {
   const { confirmationId } = useParams();
   const [addConfirmationDocVisibility, setAddConfirmationDocVisibility] =
     useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<ITeacher[]>([]);
+  const [data, setData] = useState<ISubject[]>([]);
   const navigate = useNavigate();
 
   const fetchConfirmations = async () => {
-    const res = await authenticatedRestClient.get<void, ITeacher[]>(
-      `/teacher`
+    const res = await authenticatedRestClient.get<void, ISubject[]>(
+      `/subject`
     );
     if (res) {
       setData(res);
@@ -33,37 +33,32 @@ function TeacherPage() {
   }, []);
 
 
-  const transactionColumns: TableColumn<ITeacher>[] = [
+  const transactionColumns: TableColumn<ISubject>[] = [
     {
-      name: "Teacher ID",
+      name: "Subject ID",
+      width: "auto",
       selector: (row) => row.id ?? "",
     },
     {
-      name: "Teacher Name",
-      selector: (row) => `${row.firstName} ${row.lastName}`,
+      name: "Subject Name",
+      selector: (row) => row.subjectName ?? "",
     },
     {
-      name: "Contact",
-      center: true,
-      selector: (row) => row.contactNumber ?? "",
+      name: "Main Subject",
+      selector: (row) => row.mainSubjectId ?? "",
     },
     {
-      name: "Capacity",
-        center: true,
-        selector: (row) => row.capacity ?? "",
+        name: "Minimum Of Student",
+        width: "200px",
+        selector: (row) => row.minOfStudent ?? "",
       },
-      {
-        name: "Main Subject",
-          center: true,
-          selector: (row) => row.mainSubjectID ?? "",
-        },
     
   ];
 
   return (
     <Wrapper>
       <Text size={20} weight={500} family="LexendDeca">
-        Teachers
+        Subjects
       </Text>
       <HeaderWrapper>
         <LeadingWrapper>
@@ -94,4 +89,4 @@ function TeacherPage() {
   );
 }
 
-export default TeacherPage
+export default SubjectPage

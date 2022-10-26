@@ -13,10 +13,12 @@ import { theme } from "../theme";
 import CssBaseline from '@mui/material/CssBaseline';
 import AuthLayout from "../sc-authen/AuthenLayout";
 import LoginPage from "../sc-login/LoginPage"
-import SchedulePage from "../sc-schedule/SchedulePage"
+import SchedulePage from "../sc-schedule"
 import TeacherPage from "../sc-teacher/TeacherPage"
 import ConfirmationPage from "../confirmation";
 import ConfirmationDetailPage from "../confirmation/details";
+import TableSchedule from "../sc-schedule/tableSchedule";
+import SubjectPage from "../sc-subjects";
 
 export default function Routes() {
   return (
@@ -30,10 +32,12 @@ export default function Routes() {
         </Route>
 
         <Route element={<MenuLayout />}>
-          <Route path="/" element={<div></div>} />
           <Route path="/schedule" element={<SchedulePage/>} />
+          <Route path="/schedule/:scheduleId" element={<TableSchedule/>} />
           <Route path="/confirmation" element={<ConfirmationPage/>} />
           <Route path="/confirmation/:confirmationId" element={<ConfirmationDetailPage/>} />
+          <Route path="/teachers" element={<TeacherPage/>} />
+          <Route path="/subjects" element={<SubjectPage/>} />
 
         </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

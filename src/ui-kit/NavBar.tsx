@@ -95,6 +95,22 @@ const isConfirmationActive = (path: string) => {
   return path.includes("/confirmation");
 };
 
+const isScheduleActive = (path: string) => {
+  return path.includes("/schedule");
+};
+
+const isTeacherActive = (path: string) => {
+  return path.includes("/teachers");
+};
+const isSubjectActive = (path: string) => {
+  return path.includes("/subjects");
+};
+
+
+const isPeriodActive = (path: string) => {
+  return path.includes("/period");
+};
+
 
 const isTransactionActive = (path: string) => {
   return path.includes("/transaction");
@@ -111,6 +127,8 @@ const isHistoryActive = (path: string) => {
 const isUserManagementActive = (path: string) => {
   return path.includes("/user-management");
 };
+
+
 
 export default function NavBar() {
   const classes = useStyles();
@@ -167,7 +185,7 @@ export default function NavBar() {
             >
               <MainMenu>
                 <Text weight={500} family="LexendDeca">
-                  ใบตอบรับ
+                  Confirmation Doc
                 </Text>
               </MainMenu>
             </ListItem>
@@ -178,7 +196,7 @@ export default function NavBar() {
             navigate("/product");
           }}
               className={
-                isProductActive(location.pathname)
+                isScheduleActive(location.pathname)
                   ? classes.active
                   : classes.inActive
               }
@@ -193,43 +211,43 @@ export default function NavBar() {
             <ListItem
                onClick={(e) => {
                 e.stopPropagation();
-                navigate("/transaction");
+                navigate("/teachers");
               }}
               className={
-                isTransactionActive(location.pathname)
+                isTeacherActive(location.pathname)
                   ? classes.active
                   : classes.inActive
               }
             >
-              <MainMenu> Teacher </MainMenu>
+              <MainMenu> Teachers </MainMenu>
             </ListItem>
             <MenuDivider />
             <ListItem
           onClick={(e) => {
             e.stopPropagation();
-            navigate("/order");
+            navigate("/subjects");
           }}
               className={
-                isOrderActive(location.pathname)
+                isSubjectActive(location.pathname)
                   ? classes.active
                   : classes.inActive
               }
             >
-              <MainMenu> Registration </MainMenu>
+              <MainMenu> Subject </MainMenu>
             </ListItem>
             <MenuDivider />
             <ListItem
                onClick={(e) => {
                 e.stopPropagation();
-                navigate("/user-management");
+                navigate("/period");
               }}
               className={
-                isUserManagementActive(location.pathname)
+                isPeriodActive(location.pathname)
                   ? classes.active
                   : classes.inActive
               }
             >
-              <MainMenu> User Management </MainMenu>
+              <MainMenu> Period </MainMenu>
             </ListItem>
           </List>
         </Menus>
